@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-md-auto">
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label" for="id_date">{{ form.date.label }}</label>
+                    {{ form.date }}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="id_musclegroup">{{ form.musclegroup.label }}</label>
+                    {{ form.musclegroup }}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="id_cardioexercise">{{ form.cardioexercise.label }}</label>
+                    {{ form.cardioexercise }}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="id_duration">{{ form.duration.label }}</label>
+                    {{ form.duration }}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="id_location">{{ form.location.label }}</label>
+                    {{ form.location }}
+                </div>                
+                <div class="mb-3">
+                    <label class="form-label" for="id_notes">{{ form.notes.label }}</label>
+                    {{ form.notes }}
+                </div>
+                <div class="mb-3 form-check">
+                    <label class="form-check-label" for="id_is_rest">{{ form.is_rest.label }}</label>
+                    {{ form.is_rest }}
+                </div>
+                <div class="mb-3 form-check">
+                    <label class="form-check-label" for="id_rustperiode">{{ form.rustperiode.label }}</label>
+                    {{ form.rustperiode }}
+                </div>                
+                <button type="submit" class="btn btn-primary">Opslaan</button>
+            </form>
+        </div>
+    </div>
+
+    <h3 class="mt-2">Laatste 10 dagen</h3>
+    <div class="list-group">
+        {% for activity in activities %}
+            {% if activity.is_rest %}           
+                <a href="#" class="list-group-item list-group-item-action list-group-item-secondary">
+                <div class="d-flex justify-content-between">
+                    <h6 class="mb-1">{{ activity.date|date:"l j F" }}: Rustdag</h6>
+                    
+            </div>
+            <small>0 minuten</small>
+        {% else %}     
+          <a href="#" class="list-group-item list-group-item-action">
+            <div class="d-flex justify-content-between">
+                <h6 class="mb-1">{{ activity.date|date:"l j F" }}: 
+                {% if activity.musclegroup %} 
+                   {{ activity.musclegroup }}
+                {% else %}
+                 {{ activity.cardioexercise }}
+                {% endif %}
+            </h6>
+            </div>
+            <small>{{ activity.duration }} minuten</small>
+        {% endif %}
+        {% if activity.notes %} 
+            <p class="mb-1">{{ activity.notes }}</p>
+        {% endif %}
+        </a>
+        {% empty %}
+            <p class="text-center">Geen activiteiten vastgelegd</p>
+        {% endfor %}
+    </div>
+{% endblock %}

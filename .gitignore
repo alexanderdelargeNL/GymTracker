@@ -3,3 +3,4 @@ venv/
 db.sqlite3
 speeltuin.sqlite3
 speeltuin (leeg).sqlite3
+__pycache__

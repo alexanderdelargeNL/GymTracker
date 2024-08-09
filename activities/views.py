@@ -3,6 +3,7 @@ from django.shortcuts import redirect
 from django.utils import timezone
 from activities.models import Activity
 from activities.forms import ActivityForm
+from datetime import timedelta
 
 class ActivityListView(ListView):
     model = Activity
@@ -30,7 +31,7 @@ class ActivityListView(ListView):
             activity = form.save(commit=False)  # Don't save to the database yet
             if form.cleaned_data.get('rustperiode'):  # Check if the checkbox is checked
                 # Implement the loop to insert new Activity records
-                current_date = timezone.now().date()
+                current_date = timezone.now().date() - timedelta(days=1)
                 while True:
                     # Get the highest date from Activity.date
                     highest_date = Activity.objects.order_by('-date').first().date

@@ -3,7 +3,7 @@ from .models import Activity
 import datetime
 
 class ActivityForm(forms.ModelForm):
-    rustperiode = forms.BooleanField(required=False, label='Rustdagen aanvullen t/m huidige datum', widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}))
+    rustperiode = forms.BooleanField(required=False, label='Rustdagen aanvullen tot gisteren', widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}))
 
     class Meta:
         model = Activity

@@ -51,24 +51,24 @@
                     
             </div>
             <small>0 minuten</small>
-        {% else %}     
-          <a href="#" class="list-group-item list-group-item-action">
-            <div class="d-flex justify-content-between">
+            {% else %}     
+                <a href="#" class="list-group-item list-group-item-action">
+                <div class="d-flex justify-content-between">
                 <h6 class="mb-1">{{ activity.date|date:"l j F" }}: 
                 {% if activity.musclegroup %} 
-                   {{ activity.musclegroup }}
+                    {{ activity.musclegroup }}
                 {% else %}
-                 {{ activity.cardioexercise }}
+                    {{ activity.cardioexercise }}
                 {% endif %}
-            </h6>
-            </div>
-            <small>{{ activity.duration }} minuten</small>
-        {% endif %}
-        {% if activity.notes %} 
-            <p class="mb-1">{{ activity.notes }}</p>
-        {% endif %}
-        </a>
-        {% empty %}
+                </h6>
+                </div>
+                <small>{{ activity.duration }} minuten</small>
+            {% endif %}
+            {% if activity.notes %} 
+                <p class="mb-1">{{ activity.notes }}</p>
+            {% endif %}
+            </a>
+            {% empty %}
             <p class="text-center">Geen activiteiten vastgelegd</p>
         {% endfor %}
     </div>

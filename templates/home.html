@@ -43,33 +43,35 @@
 
     <h3 class="mt-2">Laatste 7 dagen</h3>
     <div class="list-group">
-        {% for activity in activities %}
-            {% if activity.is_rest %}           
-                <a href="#" class="list-group-item list-group-item-action list-group-item-secondary">
-                <div class="d-flex justify-content-between">
-                    <h6 class="mb-1">{{ activity.date|date:"l j F" }}: Rustdag</h6>
-                    
-            </div>
-            <small>0 minuten</small>
-            {% else %}     
-                <a href="#" class="list-group-item list-group-item-action">
-                <div class="d-flex justify-content-between">
-                <h6 class="mb-1">{{ activity.date|date:"l j F" }}: 
-                {% if activity.musclegroup %} 
-                    {{ activity.musclegroup }}
-                {% else %}
-                    {{ activity.cardioexercise }}
+        {% for date, activities in grouped_activities.items %}
+            <h4>{{ date|date:"l j F" }}</h4>
+            {% for activity in activities %}
+                {% if activity.is_rest %}           
+                    <a href="#" class="list-group-item list-group-item-action list-group-item-secondary">
+                    <div class="d-flex justify-content-between">
+                        <h6 class="mb-1">Rustdag</h6>
+                    </div>
+                    <small>0 minuten</small>
+                {% else %}     
+                    <a href="#" class="list-group-item list-group-item-action">
+                    <div class="d-flex justify-content-between">
+                    <h6 class="mb-1">
+                    {% if activity.musclegroup %} 
+                        {{ activity.musclegroup }}
+                    {% else %}
+                        {{ activity.cardioexercise }}
+                    {% endif %}
+                    </h6>
+                    </div>
+                    <small>{{ activity.duration }} minuten</small>
                 {% endif %}
-                </h6>
-                </div>
-                <small>{{ activity.duration }} minuten</small>
-            {% endif %}
-            {% if activity.notes %} 
-                <p class="mb-1">{{ activity.notes }}</p>
-            {% endif %}
-            </a>
-            {% empty %}
-            <p class="text-center">Geen activiteiten vastgelegd</p>
+                {% if activity.notes %} 
+                    <p class="mb-1">{{ activity.notes }}</p>
+                {% endif %}
+                </a>
+            {% endfor %}
+        {% empty %}
+        <p class="text-center">Geen activiteiten vastgelegd</p>
         {% endfor %}
     </div>
 {% endblock %}

@@ -1,3 +1,4 @@
+from collections import defaultdict
 from django.views.generic import ListView
 from django.shortcuts import redirect
 from django.utils import timezone
@@ -14,16 +15,23 @@ class ActivityListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = ActivityForm()
-        
-        # Get the latest 10 dates from the Activity model
+
+        # Get the latest 7 dates from the Activity model
         latest_dates = Activity.objects.values('date').order_by('-date').distinct()[:7]
         latest_dates = [entry['date'] for entry in latest_dates]
 
         # Filter activities to only include those with the latest 7 dates
-        context['activities'] = Activity.objects.filter(date__in=latest_dates).order_by('-date', '-id')
+        activities = Activity.objects.filter(date__in=latest_dates).order_by('-date', '-id')
+    
+        # Group activities by date
+        grouped_activities = defaultdict(list)
+        for activity in activities:
+            grouped_activities[activity.date].append(activity)
 
-        return context
+        # Pass the grouped activities to the context
+        context['grouped_activities'] = dict(grouped_activities)  # Convert defaultdict to dict
 
+        return context    
 
     def post(self, request, *args, **kwargs):
         form = ActivityForm(request.POST)

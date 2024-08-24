@@ -53,7 +53,7 @@ class ActivityListView(ListView):
                             date=Y,
                             duration=0,  # Assuming duration is 0 for rustperiode
                             is_rest=True,  # Assuming this should be a rest day
-                            notes="Automatisch toegevoegde rustdagen"
+                            notes="Automatisch toegevoegde rustdag"
                         )
 
             else:

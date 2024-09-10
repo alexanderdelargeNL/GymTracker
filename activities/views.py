@@ -17,7 +17,7 @@ class ActivityListView(ListView):
         context['form'] = ActivityForm()
 
         # Get the latest 7 dates from the Activity model
-        latest_dates = Activity.objects.values('date').order_by('-date').distinct()[:7]
+        latest_dates = Activity.objects.values('date').order_by('-date').distinct()[:21]
         latest_dates = [entry['date'] for entry in latest_dates]
 
         # Filter activities to only include those with the latest 7 dates
